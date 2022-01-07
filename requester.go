@@ -10,24 +10,21 @@ import (
 // Requester represent the package structure, with creating exactly the same interface your own codebase you can
 // easily mock the functions inside this package while writing unit tests.
 type Requester interface {
-	Get(ra RequestArguments) (*http.Response, error)
-	Post(ra RequestArguments) (*http.Response, error)
-	Put(ra RequestArguments) (*http.Response, error)
+	Get() (*http.Response, error)
+	Post() (*http.Response, error)
+	Put() (*http.Response, error)
 }
 
 type Request struct {
-	Timeout int
-	Headers []map[string]interface{}
-}
-
-type RequestArguments struct {
+	Timeout  int
+	Headers  []map[string]interface{}
 	Endpoint string
-	Payload  string
+	Body     string
 }
 
 // Get simply send get http request to the given endpoint and return *http.Response and error if have it
-func (r *Request) Get(ra RequestArguments) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, ra.Endpoint, strings.NewReader(ra.Payload))
+func (r *Request) Get() (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodGet, r.Endpoint, strings.NewReader(r.Body))
 
 	if err != nil {
 		return nil, err
@@ -41,8 +38,8 @@ func (r *Request) Get(ra RequestArguments) (*http.Response, error) {
 }
 
 // Post simply send post http request to the given endpoint and return *http.Response and error if have it
-func (r *Request) Post(ra RequestArguments) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPost, ra.Endpoint, strings.NewReader(ra.Payload))
+func (r *Request) Post() (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodPost, r.Endpoint, strings.NewReader(r.Body))
 
 	if err != nil {
 		return nil, err
@@ -55,8 +52,8 @@ func (r *Request) Post(ra RequestArguments) (*http.Response, error) {
 }
 
 // Put simply execute put http request to the given endpoint and return *http.Response and error if have it
-func (r *Request) Put(ra RequestArguments) (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPut, ra.Endpoint, strings.NewReader(ra.Payload))
+func (r *Request) Put() (*http.Response, error) {
+	req, err := http.NewRequest(http.MethodPut, r.Endpoint, strings.NewReader(r.Body))
 
 	if err != nil {
 		return nil, err

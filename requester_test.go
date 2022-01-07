@@ -35,13 +35,10 @@ func TestRequest_Get(t *testing.T) {
 					"Host": "test.test.com",
 				},
 			},
-		}
-		ra := RequestArguments{
 			Endpoint: mockServer.URL,
-			Payload:  "",
+			Body:     "",
 		}
-
-		response, err := request.Get(ra)
+		response, err := request.Get()
 
 		if response.StatusCode != http.StatusAccepted {
 			t.Error(fmt.Sprintf("expected status code is: %d, got: %d", http.StatusAccepted, response.StatusCode))
@@ -53,6 +50,9 @@ func TestRequest_Get(t *testing.T) {
 	})
 
 	t.Run("it_should_return_error_when_can_not_parse_the_url_and_payload", func(t *testing.T) {
+		corruptedURL := "```"
+		corruptedPayload := "```"
+
 		request := Request{
 			Timeout: 60,
 			Headers: []map[string]interface{}{
@@ -60,14 +60,10 @@ func TestRequest_Get(t *testing.T) {
 					"Content-Type": "application/json",
 				},
 			},
-		}
-		corruptedURL := "```"
-		corruptedPayload := "```"
-		ra := RequestArguments{
 			Endpoint: corruptedURL,
-			Payload:  corruptedPayload,
+			Body:     corruptedPayload,
 		}
-		_, err := request.Get(ra)
+		_, err := request.Get()
 
 		if err == nil {
 			t.Error("expected error but return success")
@@ -89,12 +85,10 @@ func TestRequest_Post(t *testing.T) {
 					"Host": "test.test.com",
 				},
 			},
-		}
-		ra := RequestArguments{
 			Endpoint: mockServer.URL,
-			Payload:  `{"name": "Dogukan"}`,
+			Body:     `{"name": "Dogukan"}`,
 		}
-		response, err := request.Post(ra)
+		response, err := request.Post()
 
 		if response.StatusCode != http.StatusAccepted {
 			t.Error(fmt.Sprintf("expected status code is: %d, got: %d", http.StatusAccepted, response.StatusCode))
@@ -106,6 +100,8 @@ func TestRequest_Post(t *testing.T) {
 	})
 
 	t.Run("it_should_return_error_when_can_not_parse_the_url_and_payload", func(t *testing.T) {
+		corruptedURL := "```"
+		corruptedPayload := "```"
 		request := Request{
 			Timeout: 60,
 			Headers: []map[string]interface{}{
@@ -113,14 +109,10 @@ func TestRequest_Post(t *testing.T) {
 					"Content-Type": "application/json",
 				},
 			},
-		}
-		corruptedURL := "```"
-		corruptedPayload := "```"
-		ra := RequestArguments{
 			Endpoint: corruptedURL,
-			Payload:  corruptedPayload,
+			Body:     corruptedPayload,
 		}
-		_, err := request.Post(ra)
+		_, err := request.Post()
 
 		if err == nil {
 			t.Error("expected error but return success")
@@ -142,13 +134,10 @@ func TestRequest_Put(t *testing.T) {
 					"Host": "test.test.com",
 				},
 			},
-		}
-		ra := RequestArguments{
 			Endpoint: mockServer.URL,
-			Payload:  "",
+			Body:     "",
 		}
-
-		response, err := request.Put(ra)
+		response, err := request.Put()
 
 		if response.StatusCode != http.StatusAccepted {
 			t.Error(fmt.Sprintf("expected status code is: %d, got: %d", http.StatusAccepted, response.StatusCode))
@@ -160,6 +149,9 @@ func TestRequest_Put(t *testing.T) {
 	})
 
 	t.Run("it_should_return_error_when_can_not_parse_the_url_and_payload", func(t *testing.T) {
+		corruptedURL := "```"
+		corruptedPayload := "```"
+
 		request := Request{
 			Timeout: 60,
 			Headers: []map[string]interface{}{
@@ -167,14 +159,10 @@ func TestRequest_Put(t *testing.T) {
 					"Content-Type": "application/json",
 				},
 			},
-		}
-		corruptedURL := "```"
-		corruptedPayload := "```"
-		ra := RequestArguments{
 			Endpoint: corruptedURL,
-			Payload:  corruptedPayload,
+			Body:     corruptedPayload,
 		}
-		_, err := request.Put(ra)
+		_, err := request.Put()
 
 		if err == nil {
 			t.Error("expected error but return success")
