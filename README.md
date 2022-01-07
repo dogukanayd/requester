@@ -1,5 +1,7 @@
 # Requester
 
+[![Coverage Status](https://coveralls.io/repos/github/dogukanayd/requester/badge.svg?branch=main)](https://coveralls.io/github/dogukanayd/requester?branch=main)
+
 Request is a HTTP request library for Go with interfaces and mocks for unit tests.
 
 
