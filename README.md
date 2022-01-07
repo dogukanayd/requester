@@ -26,9 +26,9 @@ import (
 )
 
 type Requester interface {
-	Get(ra RequestArguments) (*http.Response, error)
-	Post(ra RequestArguments) (*http.Response, error)
-	Put(ra RequestArguments) (*http.Response, error)
+	Get() (*http.Response, error)
+	Post() (*http.Response, error)
+	Put() (*http.Response, error)
 }
 
 ```
