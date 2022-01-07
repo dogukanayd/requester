@@ -25,11 +25,10 @@ import (
 	"net/http"
 )
 
-type Poster interface {
-	Post(ra requester.RequestArguments) (*http.Response, error)
+type Requester interface {
+	Get(ra RequestArguments) (*http.Response, error)
+	Post(ra RequestArguments) (*http.Response, error)
+	Put(ra RequestArguments) (*http.Response, error)
 }
 
-type Getter interface {
-	Get(ra requester.RequestArguments) (*http.Response, error)
-}
 ```
