@@ -34,7 +34,7 @@ func TestRequest_Get(t *testing.T) {
 				},
 			},
 			Endpoint: "://///////\\***",
-			Body:     "",
+			Body:     []byte(""),
 		}
 
 		_, err := request.Get()
@@ -57,7 +57,7 @@ func TestRequest_Get(t *testing.T) {
 				},
 			},
 			Endpoint: mockServer.URL,
-			Body:     "",
+			Body:     []byte(""),
 		}
 		response, err := request.Get()
 
@@ -72,8 +72,7 @@ func TestRequest_Get(t *testing.T) {
 
 	t.Run("it_should_return_error_when_can_not_parse_the_url_and_payload", func(t *testing.T) {
 		corruptedURL := "```"
-		corruptedPayload := "```"
-
+		corruptedPayload := []byte("```")
 		request := Request{
 			Timeout: 60,
 			Headers: []map[string]interface{}{
@@ -105,7 +104,7 @@ func TestRequest_Post(t *testing.T) {
 				},
 			},
 			Endpoint: "://///////\\***",
-			Body:     "",
+			Body:     []byte(""),
 		}
 
 		_, err := request.Post()
@@ -129,7 +128,7 @@ func TestRequest_Post(t *testing.T) {
 				},
 			},
 			Endpoint: mockServer.URL,
-			Body:     `{"name": "Dogukan"}`,
+			Body:     []byte(""),
 		}
 		response, err := request.Post()
 
@@ -144,7 +143,7 @@ func TestRequest_Post(t *testing.T) {
 
 	t.Run("it_should_return_error_when_can_not_parse_the_url_and_payload", func(t *testing.T) {
 		corruptedURL := "```"
-		corruptedPayload := "```"
+		corruptedPayload := []byte("```")
 		request := Request{
 			Timeout: 60,
 			Headers: []map[string]interface{}{
@@ -176,7 +175,7 @@ func TestRequest_Put(t *testing.T) {
 				},
 			},
 			Endpoint: "://///////\\***",
-			Body:     "",
+			Body:     []byte(""),
 		}
 
 		_, err := request.Put()
@@ -200,7 +199,7 @@ func TestRequest_Put(t *testing.T) {
 				},
 			},
 			Endpoint: mockServer.URL,
-			Body:     "",
+			Body:     []byte(""),
 		}
 		response, err := request.Put()
 
@@ -215,7 +214,7 @@ func TestRequest_Put(t *testing.T) {
 
 	t.Run("it_should_return_error_when_can_not_parse_the_url_and_payload", func(t *testing.T) {
 		corruptedURL := "```"
-		corruptedPayload := "```"
+		corruptedPayload := []byte("```")
 
 		request := Request{
 			Timeout: 60,

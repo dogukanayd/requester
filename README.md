@@ -15,7 +15,35 @@ In your codebase, you should create a package called "requester" or with a name 
 have to create exactly the same interfaces that the package provides. Right after that you can mock the methods and 
 use them inside your unit tests.
 
-Example:
+Example usage of the package:
+```go
+type ExampleRequestBody struct {
+	Name    string
+	Surname string
+}
+
+func example() {
+	erb := ExampleRequestBody{
+		Name:    "Dogukan",
+		Surname: "Aydogdu",
+	}
+
+	erbj, _ := json.Marshal(erb)
+
+	response, err := (&Request{
+		Timeout: 60,
+		Headers: []map[string]interface{}{
+			{
+				"Content-Type": "application/json",
+			},
+		},
+		Endpoint: "https://www.example.com",
+		Body:     erbj,
+	}).Post()
+}
+```
+
+Example for mock the interface your own codebase:
 
 ```go
 package your_request_package

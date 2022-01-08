@@ -19,12 +19,12 @@ type Request struct {
 	Timeout  int
 	Headers  []map[string]interface{}
 	Endpoint string
-	Body     string
+	Body     []byte
 }
 
 // Get simply send get http request to the given endpoint and return *http.Response and error if have it
 func (r *Request) Get() (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, r.Endpoint, strings.NewReader(r.Body))
+	req, err := http.NewRequest(http.MethodGet, r.Endpoint, r.readBody())
 
 	if err != nil {
 		return nil, err
@@ -39,7 +39,7 @@ func (r *Request) Get() (*http.Response, error) {
 
 // Post simply send post http request to the given endpoint and return *http.Response and error if have it
 func (r *Request) Post() (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPost, r.Endpoint, strings.NewReader(r.Body))
+	req, err := http.NewRequest(http.MethodPost, r.Endpoint, r.readBody())
 
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (r *Request) Post() (*http.Response, error) {
 
 // Put simply execute put http request to the given endpoint and return *http.Response and error if have it
 func (r *Request) Put() (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPut, r.Endpoint, strings.NewReader(r.Body))
+	req, err := http.NewRequest(http.MethodPut, r.Endpoint, r.readBody())
 
 	if err != nil {
 		return nil, err
@@ -85,4 +85,8 @@ func (r *Request) applyTimeout() time.Duration {
 	}
 
 	return time.Duration(r.Timeout) * time.Second
+}
+
+func (r *Request) readBody() *strings.Reader {
+	return strings.NewReader(string(r.Body))
 }
