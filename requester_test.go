@@ -22,6 +22,27 @@ func newMockServer(res []byte, statusCode int, headers map[string]string) *httpt
 }
 
 func TestRequest_Get(t *testing.T) {
+	t.Run("it_should_return_error_when_try_to_create_new_request", func(t *testing.T) {
+		request := Request{
+			Timeout: 60,
+			Headers: []map[string]interface{}{
+				{
+					"Content-Type": "application/json",
+				},
+				{
+					"Host": "test.test.com",
+				},
+			},
+			Endpoint: "://///////\\***",
+			Body:     "",
+		}
+
+		_, err := request.Get()
+
+		if err == nil {
+			t.Errorf("expected error but return nil")
+		}
+	})
 	t.Run("it_should_not_return_error_when_sending_get_request", func(t *testing.T) {
 		mockResponse := []byte(`{"status": "accepted"}`)
 		mockServer := newMockServer(mockResponse, http.StatusAccepted, nil)
@@ -72,6 +93,28 @@ func TestRequest_Get(t *testing.T) {
 }
 
 func TestRequest_Post(t *testing.T) {
+	t.Run("it_should_return_error_when_try_to_create_new_request", func(t *testing.T) {
+		request := Request{
+			Timeout: 60,
+			Headers: []map[string]interface{}{
+				{
+					"Content-Type": "application/json",
+				},
+				{
+					"Host": "test.test.com",
+				},
+			},
+			Endpoint: "://///////\\***",
+			Body:     "",
+		}
+
+		_, err := request.Post()
+
+		if err == nil {
+			t.Errorf("expected error but return nil")
+		}
+	})
+
 	t.Run("it_should_not_return_error_when_sending_post_request", func(t *testing.T) {
 		mockResponse := []byte(`{"status": "accepted"}`)
 		mockServer := newMockServer(mockResponse, http.StatusAccepted, nil)
@@ -121,6 +164,28 @@ func TestRequest_Post(t *testing.T) {
 }
 
 func TestRequest_Put(t *testing.T) {
+	t.Run("it_should_return_error_when_try_to_create_new_request", func(t *testing.T) {
+		request := Request{
+			Timeout: 60,
+			Headers: []map[string]interface{}{
+				{
+					"Content-Type": "application/json",
+				},
+				{
+					"Host": "test.test.com",
+				},
+			},
+			Endpoint: "://///////\\***",
+			Body:     "",
+		}
+
+		_, err := request.Put()
+
+		if err == nil {
+			t.Errorf("expected error but return nil")
+		}
+	})
+
 	t.Run("it_should_not_return_error_when_sending_put_request", func(t *testing.T) {
 		mockResponse := []byte(`{"status": "accepted"}`)
 		mockServer := newMockServer(mockResponse, http.StatusAccepted, nil)
