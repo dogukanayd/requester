@@ -13,6 +13,7 @@ type Requester interface {
 	Get() (*http.Response, error)
 	Post() (*http.Response, error)
 	Put() (*http.Response, error)
+	Delete() (*http.Response, error)
 }
 
 type Request struct {
@@ -24,43 +25,33 @@ type Request struct {
 
 // Get simply send get http request to the given endpoint and return *http.Response and error if have it
 func (r *Request) Get() (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodGet, r.Endpoint, r.readBody())
-
-	if err != nil {
-		return nil, err
-	}
-
-	r.applyHeadersToRequest(req)
-
-	req.Close = true
-
-	return (&http.Client{Timeout: r.applyTimeout()}).Do(req)
+	return r.sendRequest(http.MethodGet)
 }
 
 // Post simply send post http request to the given endpoint and return *http.Response and error if have it
 func (r *Request) Post() (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPost, r.Endpoint, r.readBody())
-
-	if err != nil {
-		return nil, err
-	}
-
-	r.applyHeadersToRequest(req)
-	req.Close = true
-
-	return (&http.Client{Timeout: r.applyTimeout()}).Do(req)
+	return r.sendRequest(http.MethodPost)
 }
 
 // Put simply execute put http request to the given endpoint and return *http.Response and error if have it
 func (r *Request) Put() (*http.Response, error) {
-	req, err := http.NewRequest(http.MethodPut, r.Endpoint, r.readBody())
+	return r.sendRequest(http.MethodPut)
+}
+
+// Delete send delete method
+func (r *Request) Delete() (*http.Response, error) {
+	return r.sendRequest(http.MethodDelete)
+}
+
+func (r *Request) sendRequest(httpMethod string) (*http.Response, error) {
+	req, err := http.NewRequest(httpMethod, r.Endpoint, r.readBody())
 
 	if err != nil {
 		return nil, err
 	}
 
-	r.applyHeadersToRequest(req)
 	req.Close = true
+	r.applyHeadersToRequest(req)
 
 	return (&http.Client{Timeout: r.applyTimeout()}).Do(req)
 }
