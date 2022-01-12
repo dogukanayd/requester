@@ -57,6 +57,7 @@ type Requester interface {
 	Get() (*http.Response, error)
 	Post() (*http.Response, error)
 	Put() (*http.Response, error)
+	Delete() (*http.Response, error)
 }
 
 ```
